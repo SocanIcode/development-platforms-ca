@@ -1,6 +1,6 @@
-import { createClient } from "@supabase/supabase-js";
-const supabaseUrl =
-  import.meta?.env?.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-const supabaseAnon =
-  import.meta?.env?.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
-export const supabase = createClient(supabaseUrl, supabaseAnon);
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const url = import.meta.env?.VITE_SUPABASE_URL;
+const key = import.meta.env?.VITE_SUPABASE_ANON_KEY;
+if (!url || !key) throw new Error("Supabase keys not found (.env)");
+export const supabase = createClient(url, key);

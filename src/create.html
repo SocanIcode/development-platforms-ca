@@ -1,0 +1,157 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home • Dev Platforms CA</title>
+    <link rel="icon" href="/public/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/src/css/styles.css" />
+    <!-- For non-bundler env vars -->
+  </head>
+
+  <body
+    class="bg-gray-50 text-gray-900 dark:bg-gray-300 dark:text-gray-100 min-h-screen"
+  >
+    <header
+      class="border-b bg-white/70 dark:bg-gray-900/60 backdrop-blur sticky top-0 z-40"
+    >
+      <div class="container-narrow flex items-center gap-4 py-3">
+        <a href="/index.html" class="flex items-center gap-2 font-semibold">
+          <img
+            src="/public/articleLogo.png"
+            alt="Logo"
+            class="h-16 w-16 px-8"
+          />
+          <span>Dev Platforms CA</span>
+        </a>
+        <nav class="ml-auto flex items-center gap-4 text-sm">
+          <a href="/index.html" class="hover:underline">Home</a>
+
+          <!-- visible only when logged IN -->
+          <a
+            href="/src/create.html"
+            class="hover:underline"
+            data-auth="logged-in"
+            >Create</a
+          >
+          <a
+            href="/src/account.html"
+            class="hover:underline"
+            data-auth="logged-in"
+            >Account</a
+          >
+
+          <span
+            id="navUser"
+            data-auth="logged-in"
+            class="flex items-center gap-2"
+          >
+            <div
+              id="navInitials"
+              class="h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold text-white bg-indigo-500 hidden"
+            ></div>
+            <img
+              id="navAvatar"
+              class="h-8 w-8 rounded-full object-cover hidden"
+              alt="avatar"
+            />
+            <span id="navName" class="text-sm text-gray-700"></span>
+          </span>
+
+          <!-- visible only when logged OUT -->
+          <a
+            href="/src/login.html"
+            class="hover:underline"
+            data-auth="logged-out"
+            >Login</a
+          >
+          <a
+            href="/src/register.html"
+            class="hover:underline"
+            data-auth="logged-out"
+            >Register</a
+          >
+
+          <!-- visible only when logged IN -->
+          <button id="logoutBtn" class="hover:underline" data-auth="logged-in">
+            Logout
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container-narrow py-8">
+      <h1 class="text-center text-2xl font-bold text-[#191819] mb-4">
+        Create Listing
+      </h1>
+
+      <form
+        id="createForm"
+        novalidate
+        class="max-w-xl mx-auto bg-white rounded-xl shadow-md p-8 space-y-8"
+      >
+        <!-- Title -->
+        <div>
+          <label for="title" class="block text-sm font-medium text-gray-700">
+            Title <span class="text-red-500">*</span>
+          </label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            required
+            minlength="3"
+            placeholder="Title"
+            class="mt-2 block w-full rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 placeholder-gray-400"
+          />
+        </div>
+
+        <!-- Content  (rename from description) -->
+        <div>
+          <label for="content" class="block text-sm font-medium text-gray-700"
+            >Contents</label
+          >
+          <textarea
+            id="content"
+            name="content"
+            rows="6"
+            required
+            class="mt-2 block w-full rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 placeholder-gray-400"
+          ></textarea>
+        </div>
+
+        <!-- Media UI can stay as-is (optional) -->
+        <div class="space-y-2">
+          <label class="block text-sm font-medium text-gray-700"
+            >Cover image</label
+          >
+          <input id="imageFile" type="file" accept="image/*" />
+          <img
+            id="imagePreview"
+            class="mt-2 h-40 w-full object-cover rounded-lg hidden"
+            alt="preview"
+          />
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button
+            type="submit"
+            class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg border border-indigo-600 bg-indigo-100 px-6 py-2 text-sm font-medium text-indigo-700 hover:bg-indigo-600"
+          >
+            Create
+          </button>
+          <a
+            href="/index.html"
+            class="flex-1 sm:flex-none inline-flex items-center justify-center bg-white px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            Cancel
+          </a>
+        </div>
+
+        <p id="createStatus" class="text-sm text-gray-600"></p>
+      </form>
+    </main>
+
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

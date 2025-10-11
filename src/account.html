@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Account • Dev Platforms CA</title>
+    <link rel="icon" href="/public/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/src/css/styles.css" />
+  </head>
+  <body
+    class="bg-gray-50 text-gray-900 dark:bg-gray-300 dark:text-gray-100 min-h-screen"
+  >
+    <header
+      class="border-b bg-white/70 dark:bg-gray-900/60 backdrop-blur sticky top-0 z-40"
+    >
+      <div class="container-narrow flex items-center gap-4 py-3">
+        <a href="/index.html" class="flex items-center gap-2 font-semibold">
+          <img
+            src="/public/articleLogo.png"
+            alt="Logo"
+            class="h-16 w-16 px-8"
+          />
+          <span>Dev Platforms CA</span>
+        </a>
+        <nav class="ml-auto flex items-center gap-4 text-sm">
+          <a href="/index.html" class="hover:underline">Home</a>
+
+          <!-- visible only when logged IN -->
+          <a
+            href="/src/create.html"
+            class="hover:underline"
+            data-auth="logged-in"
+            >Create</a
+          >
+
+          <span
+            id="navUser"
+            data-auth="logged-in"
+            class="flex items-center gap-2"
+          >
+            <div
+              id="navInitials"
+              class="h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold text-white bg-indigo-500 hidden"
+            ></div>
+            <img
+              id="navAvatar"
+              class="h-8 w-8 rounded-full object-cover hidden"
+              alt="avatar"
+            />
+            <span id="navName" class="text-sm text-gray-700"></span>
+          </span>
+
+          <!-- visible only when logged OUT -->
+          <a
+            href="/src/login.html"
+            class="hover:underline"
+            data-auth="logged-out"
+            >Login</a
+          >
+          <a
+            href="/src/register.html"
+            class="hover:underline"
+            data-auth="logged-out"
+            >Register</a
+          >
+
+          <!-- visible only when logged IN -->
+          <button id="logoutBtn" class="hover:underline" data-auth="logged-in">
+            Logout
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container-narrow py-8">
+      <section class="text-center text-2xl font-bold text-[#191819] mb-4">
+        <h1 class="text-center text-2xl font-bold text-[#191819] mb-4">
+          Profile
+        </h1>
+        <form
+          id="avatarForm"
+          class="max-w-xl mx-auto bg-white-250 rounded-xl shadow-md p-8 space-y-8"
+        >
+          <img
+            id="profilePreview"
+            class="h-16 w-16 rounded-full object-cover border hidden"
+            alt=""
+          />
+          <div
+            id="profileInitials"
+            class="h-16 w-16 rounded-full flex items-center justify-center text-lg font-bold text-white bg-indigo-500"
+          ></div>
+          <input type="file" id="avatarFile" accept="image/*" />
+          <button
+            class="px-3 py-2 rounded-lg bg-blue-600 text-white"
+            type="submit"
+          >
+            Upload
+          </button>
+        </form>
+      </section>
+      <section class="grid gap-3">
+        <h2 class="text-center text-2xl font-bold text-[#191819] mb-4">
+          My Articles
+        </h2>
+        <div id="myArticles" class="grid gap-4"></div>
+      </section>
+
+      <!-- Edit Modal (single instance, outside the list) -->
+      <div id="editModal" class="fixed inset-0 z-50 hidden">
+        <!-- Backdrop -->
+        <div id="editBackdrop" class="absolute inset-0 bg-black/50"></div>
+
+        <!-- Panel -->
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+          <form
+            id="editForm"
+            class="w-full max-w-2xl rounded-xl bg-white p-6 shadow-lg relative"
+          >
+            <h2 class="text-xl text-gray-900 font-semibold mb-4">
+              Edit Article
+            </h2>
+
+            <input type="hidden" name="id" id="editId" />
+
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-900"
+                >Title</label
+              >
+              <input
+                id="editTitle"
+                name="title"
+                type="text"
+                required
+                class="mt-1 w-full rounded border px-3 py-2 text-gray-600"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700"
+                >Content</label
+              >
+              <textarea
+                id="editContent"
+                name="content"
+                rows="6"
+                required
+                class="mt-1 w-full rounded border px-3 py-2 text-gray-600"
+              ></textarea>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Cover image</label
+              >
+              <img
+                id="editPreview"
+                class="h-40 w-full object-cover rounded-lg mb-2 hidden"
+                alt="cover preview"
+              />
+              <div class="flex items-center gap-3">
+                <input id="editImageFile" type="file" accept="image/*" />
+                <label class="flex items-center gap-2 text-sm text-gray-700">
+                  <input id="editRemoveImage" type="checkbox" />
+                  Remove current image
+                </label>
+              </div>
+              <p class="mt-1 text-xs text-gray-500">
+                Uploading a new image will replace the current one.
+              </p>
+            </div>
+
+            <div class="mt-6 flex items-center gap-4 justify-end">
+              <button
+                type="button"
+                id="editCancel"
+                class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-200 transition"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                id="editSave"
+                class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg border border-indigo-600 bg-indigo-100 px-6 py-2 text-sm font-medium text-indigo-700 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
+              >
+                Save
+              </button>
+            </div>
+
+            <button
+              type="button"
+              id="editClose"
+              class="absolute top-3 right-3 rounded-full border px-2 py-0.5 text-sm"
+            >
+              ✕
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

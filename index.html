@@ -1,9 +1,8 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Article • Dev Platforms CA</title>
+    <title>Home • Dev Platforms CA</title>
     <link rel="icon" href="/public/favicon.ico" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/src/css/styles.css" />
@@ -12,15 +11,11 @@
     class="bg-gray-50 text-gray-900 dark:bg-gray-300 dark:text-gray-100 min-h-screen"
   >
     <header
-      class="border-b bg-white/70 dark:bg-gray-900/60 backdrop-blur sticky top-0 z-40"
+      class="border-b dark:bg-gray-900/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 sticky top-0 z-40"
     >
       <div class="container-narrow flex items-center gap-4 py-3">
         <a href="/index.html" class="flex items-center gap-2 font-semibold">
-          <img
-            src="/public/articleLogo.png"
-            alt="Logo"
-            class="h-16 w-16 px-8"
-          />
+          <img src="/public/articleLogo.png" alt="Logo" class="h-16 w-16" />
           <span>Dev Platforms CA</span>
         </a>
         <nav class="ml-auto flex items-center gap-4 text-sm">
@@ -78,10 +73,15 @@
         </nav>
       </div>
     </header>
+
     <main
-      class="container-narrow py-10 dark:text-gray-900 flex justify-center gap-4 py-25 m-20"
+      class="container-narrow text-gray-900 flex justify-center gap-4 py-10"
     >
-      <article id="articleView" class="prose max-w-none"></article>
+      <h1 class="text-2xl items-center font-bold mb-4">Articles</h1>
+      <div
+        id="articlesList"
+        class="w-full max-w-md rounded-xl border bg-white m-20 backdrop-blur"
+      ></div>
     </main>
 
     <script type="module" src="/src/js/main.js"></script>
