@@ -140,7 +140,7 @@ function bindModal(userId) {
     return;
   }
 
-  // 🟡 Show/Hide helpers
+  //  Show/Hide helpers
   const hide = () => {
     modal.classList.add("hidden");
     form.reset();
@@ -149,7 +149,7 @@ function bindModal(userId) {
   };
   const show = () => modal.classList.remove("hidden");
 
-  // 🟢 Live preview
+  //  Live preview
   fileEl?.addEventListener("change", () => {
     const f = fileEl.files?.[0];
     if (f) {
@@ -161,12 +161,12 @@ function bindModal(userId) {
     }
   });
 
-  // 🟣 Hide on close/cancel/backdrop
+  //  Hide on close/cancel/backdrop
   closeBtn?.addEventListener("click", hide);
   cancelBtn?.addEventListener("click", hide);
   backdrop?.addEventListener("click", hide);
 
-  // 🟠 Save/update form submit
+  //  Save/update form submit
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!CURRENT) return;

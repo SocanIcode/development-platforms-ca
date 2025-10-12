@@ -1,4 +1,3 @@
-// /src/js/pages/articlePage.js
 import { supabase } from "../lib/supabaseClient.js";
 import { toastError } from "../ui/feedback.js";
 
@@ -23,7 +22,6 @@ export async function loadArticlePage() {
 
     const date = new Date(data.created_at).toLocaleString();
 
-    // Centered image and text with fixed max-width
     const img = data.image_url
       ? `
       <div class="flex justify-center mb-6">
@@ -33,6 +31,11 @@ export async function loadArticlePage() {
           class="max-w-2xl w-full rounded-xl shadow-md object-cover"
         />
       </div>`
+      : "";
+    const cat = data.category
+      ? `<span class="inline-flex items-center px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-700">${escapeHtml(
+          data.category
+        )}</span>`
       : "";
 
     root.innerHTML = `

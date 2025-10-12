@@ -6,6 +6,7 @@ import { loadCreate } from "./pages/create.js";
 import { loadLoginPage } from "./pages/loginPage.js";
 import { loadRegisterPage } from "./pages/registerPage.js";
 import { loadAccountPage } from "./pages/account.js";
+import { toastError } from "./ui/feedback.js";
 
 function initialsFrom(nameOrEmail = "") {
   const s = (nameOrEmail || "").trim();
@@ -27,7 +28,7 @@ async function enhanceNavbar() {
   [imgEl, initEl].forEach((el) => el?.classList.add("hidden"));
   if (nameEl) nameEl.textContent = "";
 
-  if (!user) return; // logged out
+  if (!user) return;
 
   const display = user.user_metadata?.name || user.email;
   if (nameEl) nameEl.textContent = display;
