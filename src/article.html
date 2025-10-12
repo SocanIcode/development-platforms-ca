@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Read the latest developer articles, tutorials, and insights on Dev Platforms CA — where creators share knowledge and grow together."
+    />
+
+    <title>Article • Dev Platforms CA</title>
+    <link rel="icon" href="/public/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/src/css/styles.css" />
+  </head>
+  <body
+    class="bg-gray-50 text-gray-900 dark:bg-gray-100 dark:text-gray-100 min-h-screen"
+  >
+    <header class="border-b dark:bg-gray-900/50 sticky top-0 z-50">
+      <div class="container-narrow flex items-center gap-4 py-3">
+        <a href="/index.html" class="flex items-center gap-2 font-semibold">
+          <img
+            src="/public/articleLogo.png"
+            alt="Dev Platforms CA logo"
+            class="h-16 w-16"
+            width="64"
+            height="64"
+          />
+          <span>Dev Platforms CA</span>
+        </a>
+        <nav
+          class="ml-auto flex items-center gap-4 text-sm"
+          aria-label="Primary"
+        >
+          <a href="/index.html" class="hover:underline">Home</a>
+
+          <!-- visible only when logged IN -->
+          <a
+            href="/src/create.html"
+            class="hover:underline"
+            data-auth="logged-in"
+            >Create</a
+          >
+          <a
+            href="/src/account.html"
+            class="hover:underline"
+            data-auth="logged-in"
+            >Account</a
+          >
+
+          <div
+            id="navUser"
+            data-auth="logged-in"
+            class="flex items-center gap-2"
+          >
+            <div
+              id="navInitials"
+              class="h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold text-white bg-indigo-500 hidden"
+            ></div>
+            <img
+              id="navAvatar"
+              src="/public/default-avatar.png"
+              class="h-8 w-8 rounded-full object-cover hidden"
+              alt="avatar"
+              width="32"
+              height="32"
+            />
+            <span id="navName" class="text-sm text-gray-70"></span>
+          </div>
+
+          <!-- visible only when logged OUT -->
+          <a
+            href="/src/login.html"
+            class="hover:underline"
+            data-auth="logged-out"
+            >Login</a
+          >
+          <a
+            href="/src/register.html"
+            class="hover:underline"
+            data-auth="logged-out"
+            >Register</a
+          >
+
+          <!-- visible only when logged IN -->
+          <button id="logoutBtn" class="hover:underline" data-auth="logged-in">
+            Logout
+          </button>
+        </nav>
+      </div>
+    </header>
+    <main
+      class="container-narrow py-10 dark:text-gray-900 flex justify-center gap-4 py-25 m-20"
+    >
+      <article id="articleView" class="prose max-w-none"></article>
+    </main>
+
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

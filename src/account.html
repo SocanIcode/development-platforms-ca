@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Manage your Dev Platforms CA profile, update your avatar, and edit your published articles all in one place."
+    />
+    <title>My Account • Dev Platforms CA</title>
+    <meta
+      name="description"
+      content="Manage your Dev Platforms CA profile, update your avatar, and edit your published articles from one place."
+    />
+    <link rel="icon" href="/public/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/src/css/styles.css" />
+  </head>
+  <body
+    class="bg-gray-50 text-gray-900 dark:bg-gray-100 dark:text-gray-100 min-h-screen"
+  >
+    <header class="border-b dark:bg-gray-900/50 sticky top-0 z-50">
+      <div class="container-narrow flex items-center gap-4 py-3">
+        <a href="/index.html" class="flex items-center gap-2 font-semibold">
+          <img
+            src="/public/articleLogo.png"
+            alt="Dev Platforms CA logo"
+            class="h-16 w-16"
+            width="64"
+            height="64"
+          />
+          <span>Dev Platforms CA</span>
+        </a>
+        <nav
+          class="ml-auto flex items-center gap-4 text-sm"
+          aria-label="Primary"
+        >
+          <a href="/index.html" class="hover:underline">Home</a>
+
+          <!-- visible only when logged IN -->
+          <a
+            href="/src/create.html"
+            class="hover:underline"
+            data-auth="logged-in"
+            >Create</a
+          >
+          <a
+            href="/src/account.html"
+            class="hover:underline"
+            data-auth="logged-in"
+            >Account</a
+          >
+
+          <div
+            id="navUser"
+            data-auth="logged-in"
+            class="flex items-center gap-2"
+          >
+            <div
+              id="navInitials"
+              class="h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold text-white bg-indigo-500 hidden"
+            ></div>
+            <img
+              id="navAvatar"
+              src="/public/default-avatar.png"
+              class="h-8 w-8 rounded-full object-cover hidden"
+              alt="avatar"
+              width="32"
+              height="32"
+            />
+            <span id="navName" class="text-sm text-gray-70"></span>
+          </div>
+
+          <!-- visible only when logged OUT -->
+          <a
+            href="/src/login.html"
+            class="hover:underline"
+            data-auth="logged-out"
+            >Login</a
+          >
+          <a
+            href="/src/register.html"
+            class="hover:underline"
+            data-auth="logged-out"
+            >Register</a
+          >
+
+          <!-- visible only when logged IN -->
+          <button id="logoutBtn" class="hover:underline" data-auth="logged-in">
+            Logout
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container-narrow py-8">
+      <section class="text-center mb-8">
+        <h1 class="text-2xl font-bold text-[#191819] mb-4">Profile</h1>
+        <form
+          id="avatarForm"
+          class="max-w-xl mx-auto bg-white/25 rounded-xl shadow-md p-8 space-y-6"
+        >
+          <img
+            id="profilePreview"
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+            class="h-16 w-16 rounded-full object-cover border hidden"
+            alt=""
+            width="64"
+            height="64"
+          />
+          <div
+            id="profileInitials"
+            class="h-16 w-16 rounded-full flex items-center justify-center text-lg font-bold text-white bg-indigo-500"
+          ></div>
+          <input type="file" id="avatarFile" accept="image/*" />
+          <button
+            class="px-3 py-2 rounded-lg bg-blue-600 text-white"
+            type="submit"
+          >
+            Upload
+          </button>
+        </form>
+      </section>
+
+      <section class="grid gap-3">
+        <h2 class="text-center text-2xl font-bold text-[#191819] mb-4">
+          My Articles
+        </h2>
+        <div id="myArticles" class="grid gap-4"></div>
+      </section>
+
+      <!-- Edit Modal -->
+      <div
+        id="editModal"
+        class="fixed inset-0 z-50 hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="editDialogTitle"
+      >
+        <div id="editBackdrop" class="absolute inset-0 bg-black/50"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+          <form
+            id="editForm"
+            class="w-full max-w-2xl rounded-xl bg-white p-6 shadow-lg relative"
+          >
+            <h2
+              id="editDialogTitle"
+              class="text-xl text-gray-900 font-semibold mb-4"
+            >
+              Edit Article
+            </h2>
+
+            <input type="hidden" name="id" id="editId" />
+
+            <div class="mb-4">
+              <label
+                for="editTitle"
+                class="block text-sm font-medium text-gray-900"
+                >Title</label
+              >
+              <input
+                id="editTitle"
+                name="title"
+                type="text"
+                required
+                class="mt-1 w-full rounded border px-3 py-2 text-gray-700"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="editCategory"
+                class="block text-sm font-medium text-gray-700"
+                >Category</label
+              >
+              <input
+                id="editCategory"
+                name="category"
+                type="text"
+                placeholder="e.g. News, Tips"
+                class="mt-2 block w-full rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 placeholder-gray-400"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="editContent"
+                class="block text-sm font-medium text-gray-700"
+                >Content</label
+              >
+              <textarea
+                id="editContent"
+                name="content"
+                rows="6"
+                required
+                class="mt-1 w-full rounded border px-3 py-2 text-gray-700"
+              ></textarea>
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="editImageFile"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Cover image</label
+              >
+              <img
+                id="editPreview"
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                class="h-40 w-full object-cover rounded-lg mb-2 hidden"
+                alt="cover preview"
+                width="640"
+                height="160"
+              />
+              <div class="flex items-center gap-3">
+                <input id="editImageFile" type="file" accept="image/*" />
+                <label class="flex items-center gap-2 text-sm text-gray-700">
+                  <input id="editRemoveImage" type="checkbox" />
+                  Remove current image
+                </label>
+              </div>
+              <p class="mt-1 text-xs text-gray-500">
+                Uploading a new image will replace the current one.
+              </p>
+            </div>
+
+            <div class="mt-6 flex items-center gap-4 justify-end">
+              <button
+                type="button"
+                id="editCancel"
+                class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-200 transition"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                id="editSave"
+                class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg border border-indigo-600 bg-indigo-100 px-6 py-2 text-sm font-medium text-indigo-700 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
+              >
+                Save
+              </button>
+            </div>
+
+            <button
+              type="button"
+              id="editClose"
+              class="absolute top-3 right-3 rounded-full border px-2 py-0.5 text-sm"
+            >
+              ✕
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>
